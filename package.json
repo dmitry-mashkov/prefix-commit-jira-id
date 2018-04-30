@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npm run test",
+    "preparecommitmsg": "git-hooks/prepare-commit-msg ${GIT_PARAMS}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "husky": "^0.14.3"
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^1.0.0-rc.2"
   }
 }
