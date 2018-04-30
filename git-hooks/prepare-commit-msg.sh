@@ -1,23 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-
-# get current branch
+INPUT_FILE=$1
+START_LINE=`head -n1 $INPUT_FILE`
 branchName=`git rev-parse --abbrev-ref HEAD`
+jiraId=$(echo $branchName | sed -nr 's,([a-z]+),\1,p')
 
+#echo $jiraId
 
-# search jira issue id in a pattern such a "feature/ABC-123-description"
-# SED doesn't like the PCRE non-capturing notation, so I added another capturing brackets for a branch prefix
-#jiraId=$(echo $branchName | sed -nr 's,(feature|bugfix|hotfix|release)+/([A-Z]+-[0-9]+)-.+,\1,p')
-jiraId=$(echo $branchName | sed -nr 's,(master),\1,p')
-#jiraId='asdf'
+sed -i.bak -e "1s/^/\n\n$jiraId: /" $1
 
-echo $3
-echo $jiraId
+PATTERN="^(MYPROJ)-[[:digit:]]+: "
+if ! [[ "$START_LINE" =~ $PATTERN ]]; then
+  echo "Bad commit message, see example: MYPROJ-123: commit message"
+  exit 1
+fi
 
-# only prepare commit message if pattern matched and jiraId was found
-#if [[ ! -z $jiraId ]]; then
-#  echo $jiraId
- # $1 is the name of the file containing the commit message
-# sed -i.bak -e "1s/^/\n\n$jiraId: /" $1
-# sed -i.bak -e "1s/^/\n\nAsdffdsa: /" $1
-#fi
+exit 1
