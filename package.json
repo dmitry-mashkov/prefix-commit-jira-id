@@ -4,19 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepush": "npm test",
+    "preparecommitmsg": "sh git-hooks/prepare-commit-msg",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
-    "husky": "^1.0.0-rc.2"
+  "dependencies": {
+    "husky": "^0.14.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test",
-      "pre-push": "npm test",
-      "prepare-commit-msg": "git-hooks/prepare-commit-msg ${GIT_PARAMS}"
-    }
-  }
+  "devDependencies": {}
 }
