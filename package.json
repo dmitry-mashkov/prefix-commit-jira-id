@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm run lint",
-    "preparecommitmsg": "git-hooks/prepare-commit-msg ${GIT_PARAMS}",
+    "precommit": "npm run test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
