@@ -15,6 +15,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run test",
+      "pre-push": "npm test",
       "prepare-commit-msg": "git-hooks/prepare-commit-msg ${GIT_PARAMS}"
     }
   }
