@@ -11,7 +11,7 @@ branchName=`git rev-parse --abbrev-ref HEAD`
 jiraId=$(echo $branchName | sed -nr 's,(master),\1,p')
 #jiraId='asdf'
 
-echo $2
+echo $3
 echo $jiraId
 
 # only prepare commit message if pattern matched and jiraId was found
