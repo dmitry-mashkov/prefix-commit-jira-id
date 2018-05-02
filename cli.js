@@ -22,8 +22,11 @@
 const fs = require('fs');
 const _ = require('lodash/fp');
 const childProcess = require('child_process');
+const path = require('path');
 
-const MESSAGE_FILE_PATH = process.env.GIT_PARAMS;
+
+const GIT_ROOT = path.resolve(process.env.GIT_INDEX_FILE + '/../../');
+const MESSAGE_FILE_PATH = `${GIT_ROOT}/${process.env.GIT_PARAMS}`;
 
 
 main();
@@ -57,7 +60,7 @@ function main() {
  */
 function getBranchName() {
   return childProcess
-    .execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' })
+    .execSync(`git --git-dir=${GIT_ROOT}/.git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' })
     .split('\n')[0];
 }
 
