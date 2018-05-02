@@ -31,7 +31,14 @@ main();
  * Entry point of the script
  */
 function main() {
-  let message = fs.readFileSync(MESSAGE_FILE_PATH, { encoding: 'utf-8' });
+  let message;
+
+  try {
+    message = fs.readFileSync(MESSAGE_FILE_PATH, { encoding: 'utf-8' });
+  } catch (ex) {
+    throw new Error(`prefix-commit-jira-id: Unable to read the file "${MESSAGE_FILE_PATH}"`);
+  }
+
   const branchName = getBranchName();
   const issueId = getIssueIdFromBranchName(branchName);
 
