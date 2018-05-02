@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "commit-msg": "node ./scripts/commit-msg.js",
+    "commitmsg": "node ./scripts/commit-msg.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
