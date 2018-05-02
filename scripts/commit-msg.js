@@ -16,6 +16,7 @@ const JIRA_TAG = 'TAG';
  * My awesome commit -> [TAG-123] My awesome commit
  */
 
+
 const startsWithBraces = (str) => str.match(/^\[[^\]]/);
 const startsWithMergeBranch = (str) => str.indexOf('Merge branch') === 0;
 const startsWithMergePR = (str) => str.indexOf('Merge pull request') === 0;
