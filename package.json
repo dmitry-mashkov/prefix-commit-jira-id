@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cz-jira-smart-commit": "^3.0.0"
+    "cz-jira-smart-commit": "^3.0.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@commitlint/cli": "^6.1.3",
