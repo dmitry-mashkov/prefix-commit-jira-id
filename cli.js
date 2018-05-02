@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * @overview  Auto JIRA issue ID prefixer for GIT flow
  *
