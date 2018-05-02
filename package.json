@@ -1,10 +1,10 @@
 {
-  "name": "wm-prepare-commit-message",
+  "name": "prefix-commit-jira-id",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "commit-msg": "node ./scripts/commit-msg.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
