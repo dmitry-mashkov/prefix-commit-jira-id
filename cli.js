@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @overview  Auto JIRA issue ID prefixer for GIT flow
+ * @overview  Auto JIRA issue ID prefixer for GIT workflow
  *
  * Parses JIRA ID out from a branch name and prepends it to the commit message.
  * Important: works only with GIT workflow, therefore branches names should start with "feature|bugfix|hotfix|release"
