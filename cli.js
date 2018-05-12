@@ -79,7 +79,7 @@ function init() {
  */
 function getBranchName() {
   return childProcess
-    .execSync(`git --git-dir=${GIT_ROOT}/.git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' })
+    .execSync(`git --git-dir=${gitRoot}/.git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' })
     .split('\n')[0];
 }
 
