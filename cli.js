@@ -19,6 +19,8 @@
  * Result commit message: TAG-123: My awesome commit
  */
 
+'use strict';
+
 const fs = require('fs');
 const { flow, reduce, concat, startsWith, anyPass } = require('lodash/fp');
 const childProcess = require('child_process');
