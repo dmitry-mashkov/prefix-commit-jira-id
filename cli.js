@@ -20,13 +20,12 @@
  */
 
 const fs = require('fs');
-const _ = require('lodash/fp');
+const { flow, reduce, concat, startsWith, anyPass } = require('lodash/fp');
 const childProcess = require('child_process');
-const path = require('path');
+const findUp = require('find-up');
 
-
-const GIT_ROOT = path.resolve(process.env.GIT_INDEX_FILE + '/../../');
-const MESSAGE_FILE_PATH = `${GIT_ROOT}/${process.env.GIT_PARAMS}`;
+let gitRoot,
+    messageFilePath;
 
 
 main();
@@ -36,20 +35,39 @@ main();
  * Entry point of the script
  */
 function main() {
+  setGitRoot()
+    .then(root => {
+      if (!root) throw new Error('prefix-commit-jira-id: Unable to locate .git directory.');
+
+      gitRoot = root;
+      messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
+
+      init();
+    });
+}
+
+function setGitRoot() {
+  const cwd = process.cwd();
+
+  return findUp('.git', { cwd })
+    .then(filepath => (filepath ? dirname(filepath) : null));
+}
+
+function init() {
   let message;
 
   try {
-    message = fs.readFileSync(MESSAGE_FILE_PATH, { encoding: 'utf-8' });
+    message = fs.readFileSync(messageFilePath, { encoding: 'utf-8' });
   } catch (ex) {
-    throw new Error(`prefix-commit-jira-id: Unable to read the file "${MESSAGE_FILE_PATH}"`);
+    throw new Error(`prefix-commit-jira-id: Unable to read the file "${messageFilePath}".`);
   }
 
   const branchName = getBranchName();
   const issueId = getIssueIdFromBranchName(branchName);
 
-  if (issueId && !commitMessageIsReserved(message)) {
+  if (issueId && !isCommitMessageReserved(message)) {
     message = `${issueId}: ${message}`;
-    fs.writeFileSync(MESSAGE_FILE_PATH, message, { encoding: 'utf-8' });
+    fs.writeFileSync(messageFilePath, message, { encoding: 'utf-8' });
   }
 }
 
@@ -83,7 +101,7 @@ function getIssueIdFromBranchName(branchName) {
  * @param {string} message - commit message
  * @returns {boolean} - true if it is a reserved one
  */
-function commitMessageIsReserved(message) {
+function isCommitMessageReserved(message) {
   const specialCommitPrefixes = [
     'Merge branch',
     'Merge pull request',
@@ -91,9 +109,9 @@ function commitMessageIsReserved(message) {
     '['
   ];
 
-  return _.flow([
-    _.reduce((result, current) => _.concat(result, _.startsWith(current)), []),
-    _.anyPass
+  return flow([
+    reduce((predicates, prefix) => concat(predicates, startsWith(prefix)), []),
+    anyPass
   ])(specialCommitPrefixes)(message);
 }
 
