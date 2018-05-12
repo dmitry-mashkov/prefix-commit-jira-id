@@ -5,7 +5,7 @@
   "main": "cli.js",
   "scripts": {
     "commitmsg": "node ./cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "xo && ava"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,8 @@
     "lodash": "^4.17.10"
   },
   "devDependencies": {
-    "husky": "^0.14.3"
+    "ava": "*",
+    "husky": "^0.14.3",
+    "xo": "*"
   }
 }
