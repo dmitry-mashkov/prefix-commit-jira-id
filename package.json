@@ -5,7 +5,7 @@
   "main": "cli.js",
   "scripts": {
     "commitmsg": "node ./cli.js",
-    "test": "./node_modules/.bin/eslint -c .eslintrc *.js && ava"
+    "test": "./node_modules/.bin/eslint ./**/*.js && ava"
   },
   "author": "",
   "license": "ISC",
