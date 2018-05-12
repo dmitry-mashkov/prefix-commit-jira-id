@@ -23,6 +23,7 @@ const fs = require('fs');
 const { flow, reduce, concat, startsWith, anyPass } = require('lodash/fp');
 const childProcess = require('child_process');
 const findUp = require('find-up');
+const { dirname } = require('path');
 
 let gitRoot,
     messageFilePath;
