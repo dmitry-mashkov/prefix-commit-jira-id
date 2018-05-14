@@ -2,15 +2,18 @@
   "name": "prefix-commit-jira-id",
   "version": "1.0.0",
   "description": "Adds jira id prefix for each git commit",
-  "main": "cli.js",
+  "main": "index.js",
   "scripts": {
-    "commitmsg": "node ./cli.js",
-    "test": "./node_modules/.bin/eslint ./**/*.js && ava"
+    "commitmsg": "node ./index.js",
+    "test": "./node_modules/.bin/eslint ./**/*.js && ava cli.spec.js"
+  },
+  "engines": {
+    "node": ">=6"
   },
   "author": "",
   "license": "ISC",
   "bin": {
-    "prefix-commit-jira-id": "./cli.js"
+    "prefix-commit-jira-id": "./index.js"
   },
   "dependencies": {
     "find-up": "^2.1.0",
@@ -20,6 +23,7 @@
     "ava": "*",
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
-    "husky": "^0.14.3"
+    "husky": "^0.14.3",
+    "tempy": "^0.2.1"
   }
 }

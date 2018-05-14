@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /**
  * @overview  Auto JIRA issue ID prefixer for GIT workflow
  *
@@ -19,8 +17,6 @@
  * Result commit message: TAG-123: My awesome commit
  */
 
-'use strict';
-
 const fs = require('fs');
 const { flow, reduce, concat, startsWith, anyPass } = require('lodash/fp');
 const childProcess = require('child_process');
@@ -31,33 +27,18 @@ let gitRoot,
     messageFilePath;
 
 
-main();
-
-
-/**
- * Entry point of the script
- */
-function main() {
-  setGitRoot()
-    .then(root => {
-      if (!root) throw new Error('prefix-commit-jira-id: Unable to locate .git directory.');
-
-      gitRoot = root;
-      messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
-
-      init();
-    });
-}
-
-function setGitRoot() {
+function findGitRoot() {
   const cwd = process.cwd();
 
   return findUp('.git', { cwd })
     .then(filepath => (filepath ? dirname(filepath) : null));
 }
 
-function init() {
+function execute(_gitRoot) {
   let message;
+
+  gitRoot = _gitRoot;
+  messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
 
   try {
     message = fs.readFileSync(messageFilePath, { encoding: 'utf-8' });
@@ -118,3 +99,7 @@ function isCommitMessageReserved(message) {
   ])(specialCommitPrefixes)(message);
 }
 
+module.exports = {
+  findGitRoot,
+  execute
+};
