@@ -13,7 +13,8 @@
     "env": true,
     "process": true,
     "module": true,
-    "require": true
+    "require": true,
+    "node": true
   },
   "rules": {
     "max-len": [

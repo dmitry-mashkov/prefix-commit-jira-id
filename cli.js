@@ -18,13 +18,10 @@
  */
 
 const fs = require('fs');
-const { flow, reduce, concat, startsWith, anyPass } = require('lodash/fp');
+const { flow, reduce, concat, startsWith, anyPass, split, first } = require('lodash/fp');
 const childProcess = require('child_process');
 const findUp = require('find-up');
 const { dirname } = require('path');
-
-let gitRoot,
-    messageFilePath;
 
 
 function findGitRoot() {
@@ -34,11 +31,9 @@ function findGitRoot() {
     .then(filepath => (filepath ? dirname(filepath) : null));
 }
 
-function execute(_gitRoot) {
+function execute(gitRoot) {
   let message;
-
-  gitRoot = _gitRoot;
-  messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
+  let messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
 
   try {
     message = fs.readFileSync(messageFilePath, { encoding: 'utf-8' });
@@ -46,7 +41,7 @@ function execute(_gitRoot) {
     throw new Error(`prefix-commit-jira-id: Unable to read the file "${messageFilePath}".`);
   }
 
-  const branchName = getBranchName();
+  const branchName = getBranchName(gitRoot);
   const issueId = getIssueIdFromBranchName(branchName);
 
   if (issueId && !isCommitMessageReserved(message)) {
@@ -58,12 +53,14 @@ function execute(_gitRoot) {
 /**
  * Obtains the git branch name
  *
- * @returns {string}
+ * @returns {string|undefined}
  */
-function getBranchName() {
-  return childProcess
-    .execSync(`git --git-dir=${gitRoot}/.git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' })
-    .split('\n')[0];
+function getBranchName(gitRoot) {
+  return flow([
+    () => childProcess.execSync(`git --git-dir=${gitRoot}/.git rev-parse --abbrev-ref HEAD`, { encoding: 'utf-8' }),
+    split('\n'),
+    first
+  ])();
 }
 
 /**
@@ -93,13 +90,15 @@ function isCommitMessageReserved(message) {
     '['
   ];
 
-  return flow([
-    reduce((predicates, prefix) => concat(predicates, startsWith(prefix)), []),
-    anyPass
-  ])(specialCommitPrefixes)(message);
+  const predicates = reduce((predicates, prefix) => concat(predicates, startsWith(prefix)), [])(specialCommitPrefixes);
+
+  return anyPass(predicates)(message);
 }
 
 module.exports = {
   findGitRoot,
-  execute
+  execute,
+  getBranchName,
+  getIssueIdFromBranchName,
+  isCommitMessageReserved
 };
