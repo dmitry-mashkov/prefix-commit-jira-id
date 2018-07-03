@@ -1,4 +1,7 @@
-# prefix-commit-jira-id
+prefix-commit-jira-id
+=====================
+
+[![Build Status](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id.svg?branch=master)](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id)
 
 Auto JIRA issue ID prefixer for GIT workflow
 
@@ -6,7 +9,7 @@ Auto JIRA issue ID prefixer for GIT workflow
 
 You have to install `husky` (`npm i -D husky`) according to override commit-message git hook 
 
-### Installing
+### Installation
 
 Inside your `package.json` add a standard husky npm script for the git hook:
 
