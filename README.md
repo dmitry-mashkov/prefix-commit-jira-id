@@ -9,13 +9,15 @@ Auto JIRA issue ID prefixer for GIT workflow
 
 You have to install `husky` (`npm i -D husky`) according to override commit-message git hook 
 
-### Installation
+## Installation
 
 Install the package using NPM
 
 ```sh
-$ npm install eslint --save-dev
+$ npm install prefix-commit-jira-id --save-dev
 ```
+
+## Configuration
 
 Inside your `package.json` add a standard husky npm script for the git hook:
 
@@ -26,3 +28,9 @@ Inside your `package.json` add a standard husky npm script for the git hook:
   }
 }
 ```
+
+## Supported branch types
+* feature/JIRAISSUE-123-some-description
+* bugfix/JIRAISSUE-123-some-description
+* hotfix/JIRAISSUE-123-some-description
+* release/JIRAISSUE-123-some-description
