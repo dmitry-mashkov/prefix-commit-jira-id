@@ -11,7 +11,20 @@
   "engines": {
     "node": ">=6"
   },
-  "author": "",
+  "author": {
+    "name": "Dmitry Mashkov",
+    "email": "ma6kov@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/dmitry-mashkov/prefix-commit-jira-id/issues"
+  },
+  "keywords": [
+    "jira",
+    "commit",
+    "message",
+    "prefix",
+    "issue"
+  ],
   "license": "ISC",
   "bin": {
     "prefix-commit-jira-id": "./index.js"
