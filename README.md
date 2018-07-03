@@ -11,9 +11,15 @@ You have to install `husky` (`npm i -D husky`) according to override commit-mess
 
 ### Installation
 
+Install the package using NPM
+
+```sh
+$ npm install eslint --save-dev
+```
+
 Inside your `package.json` add a standard husky npm script for the git hook:
 
-```
+```json
 {
   "scripts": {
     "commitmsg": "./node_modules/.bin/prefix-commit-jira-id"
