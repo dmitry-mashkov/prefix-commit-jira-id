@@ -11,7 +11,8 @@ const {
   execute,
   getBranchName,
   getIssueIdFromBranchName,
-  isCommitMessageReserved
+  isCommitMessageReserved,
+  isPrefixAllowed
 } = require('./cli');
 
 let childProcessStub;
@@ -49,6 +50,14 @@ test('isCommitMessageReserved checks that message contains reserved keywords', t
   t.false(isCommitMessageReserved('Basic implementation finished'));
   t.false(isCommitMessageReserved('Prefix: Merge branch a to b'));
   t.false(isCommitMessageReserved('Pull request #1 merged to develop'));
+});
+
+test('isPrefixAllowed checks that jira issue ID was not specified and current message is not a special one', t => {
+  t.true(isPrefixAllowed('Commit message for ABC-124', 'ABC-123'));
+  t.true(isPrefixAllowed('Commit message', 'ABC-123'));
+
+  t.false(isPrefixAllowed('Commit message for ABC-123', 'ABC-123'));
+  t.false(isPrefixAllowed('ABC-123: new message added', 'ABC-123'));
 });
 
 test('findGitRoot finds nearest git root in a tree', async t => {

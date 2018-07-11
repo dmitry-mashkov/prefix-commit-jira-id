@@ -44,7 +44,7 @@ function execute(gitRoot) {
   const branchName = getBranchName(gitRoot);
   const issueId = getIssueIdFromBranchName(branchName);
 
-  if (issueId && !isCommitMessageReserved(message)) {
+  if (issueId && isPrefixAllowed(message, issueId)) {
     message = `${issueId}: ${message}`;
     fs.writeFileSync(messageFilePath, message, { encoding: 'utf-8' });
   }
@@ -77,6 +77,17 @@ function getIssueIdFromBranchName(branchName) {
 }
 
 /**
+ * Adds prefix when jira issue ID was not specified and current message is not a special one
+ *
+ * @param {string} message - current commit message
+ * @param {string} issueId - jira issue ID
+ * @returns {boolean} - should a prefix be added
+ */
+function isPrefixAllowed(message, issueId) {
+  return !isCommitMessageReserved(message) && message.indexOf(issueId) === -1;
+}
+
+/**
  * Checks if the commit message is a standard reserved one
  *
  * @param {string} message - commit message
@@ -100,5 +111,6 @@ module.exports = {
   execute,
   getBranchName,
   getIssueIdFromBranchName,
-  isCommitMessageReserved
+  isCommitMessageReserved,
+  isPrefixAllowed
 };
