@@ -3,7 +3,7 @@ prefix-commit-jira-id
 
 [![Build Status](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id.svg?branch=master)](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id)
 
-Auto JIRA issue ID prefixer for GIT workflow
+Auto JIRA issue ID prefixer for GIT workflow. Make `git commit -m "your commit message"` be `ABC-318: your commit message`
 
 ## Prerequisites
 
@@ -28,6 +28,12 @@ Inside your `package.json` add a standard husky npm script for the git hook:
   }
 }
 ```
+
+## Usage
+Once you try to make a commit, e.g. `git commit -m "your commit message"` and your current branch name is `feature/ABC-319-foo-bar`
+then your real commit message will become `ABC-319: your commit message`
+
+*Note*: commits made from IDE are also preprocessed
 
 ## Supported branch types
 * feature/JIRAISSUE-123-some-description
