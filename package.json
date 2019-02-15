@@ -31,14 +31,14 @@
   },
   "dependencies": {
     "find-up": "^2.1.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "babel-eslint": "^8.2.3",
+    "babel-eslint": "^8.2.6",
     "eslint": "^4.19.1",
     "husky": "^0.14.3",
-    "sinon": "^6.0.1",
+    "sinon": "^6.3.5",
     "tempy": "^0.2.1"
   }
 }
