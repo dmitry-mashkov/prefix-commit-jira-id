@@ -6,14 +6,18 @@
 
 'use strict'; // eslint-disable-line
 
-const {findGitRoot, execute} = require('./cli');
+const { findGitRoot, execute, getPackageJsonRoot } = require('./cli');
 
 
-findGitRoot()
-  .then(root => {
-    if (!root) throw new Error('prefix-commit-jira-id: Unable to locate .git directory.');
+Promise.all([
+  findGitRoot(),
+  getPackageJsonRoot()
+])
+  .then(([gitRoot, packageJsonRoot]) => {
+    if (!gitRoot) throw new Error('prefix-commit-jira-id: Unable to locate .git directory.');
+    if (!packageJsonRoot) throw new Error('prefix-commit-jira-id: Unable to locate package.json.');
 
-    const options = require('./package').prefixCommitId || {};
+    const options = require(`${packageJsonRoot}/package`).prefixCommitId || {};
 
-    execute(root, options);
+    execute(gitRoot, options);
   });

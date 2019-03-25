@@ -3,7 +3,7 @@ prefix-commit-jira-id
 
 [![Build Status](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id.svg?branch=master)](https://travis-ci.org/dmitry-mashkov/prefix-commit-jira-id)
 
-Auto JIRA issue ID prefixer for GIT workflow. Make `git commit -m "your commit message"` be `ABC-318: your commit message`
+Configurable auto issue ID prefixer for GIT workflow. Make `git commit -m "your commit message"` be `ABC-318: your commit message`
 
 ## Prerequisites
 
@@ -23,11 +23,26 @@ Inside your `package.json` add a standard husky npm script for the git hook:
 
 ```json
 {
-  "scripts": {
-    "commitmsg": "./node_modules/.bin/prefix-commit-jira-id"
+  "husky": {
+    "hooks": {
+       "commit-msg": "prefix-commit-jira-id"
+     }
   }
 }
 ```
+
+To specify a custom branch pattern and a custom prefix message use a special prefixCommitId configuration block:
+
+```json
+{
+  "prefixCommitId": {
+    "pattern": "^(?:feature|bugfix)/my-name/(\\d+)",
+    "prefix": "#ID: "
+  }
+}
+```
+
+In the `prefix` pattern the *ID* will be changed to the branch ID
 
 ## Usage
 Once you try to make a commit, e.g. `git commit -m "your commit message"` and your current branch name is `feature/ABC-319-foo-bar`

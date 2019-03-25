@@ -24,6 +24,11 @@ const findUp = require('find-up');
 const { dirname } = require('path');
 
 
+/**
+ * Returns an absolute path to the current .git directory
+ *
+ * @return {Promise<string | null>} - path string if .git was found, null otherwise
+ */
 function findGitRoot() {
   const cwd = process.cwd();
 
@@ -33,7 +38,8 @@ function findGitRoot() {
 
 function execute(gitRoot, options) {
   let message;
-  let messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
+  let messageFilePath = `${gitRoot}/${process.env.HUSKY_GIT_PARAMS}`;
+  const prefixFormat = options.prefix || 'ID: ';
 
   try {
     message = fs.readFileSync(messageFilePath, { encoding: 'utf-8' });
@@ -45,9 +51,14 @@ function execute(gitRoot, options) {
   const issueId = getIssueIdFromBranchName(branchName, options.pattern);
 
   if (issueId && isPrefixAllowed(message, issueId)) {
-    message = `${issueId}: ${message}`;
+    message = prefixFormat.replace('ID', issueId) + message;
     fs.writeFileSync(messageFilePath, message, { encoding: 'utf-8' });
   }
+}
+
+function getPackageJsonRoot() {
+  return findUp('package.json', { cwd: process.cwd() })
+    .then(filepath => (filepath ? dirname(filepath) : null));
 }
 
 /**
@@ -113,5 +124,6 @@ module.exports = {
   getBranchName,
   getIssueIdFromBranchName,
   isCommitMessageReserved,
-  isPrefixAllowed
+  isPrefixAllowed,
+  getPackageJsonRoot
 };
