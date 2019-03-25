@@ -31,7 +31,7 @@ function findGitRoot() {
     .then(filepath => (filepath ? dirname(filepath) : null));
 }
 
-function execute(gitRoot) {
+function execute(gitRoot, options) {
   let message;
   let messageFilePath = `${gitRoot}/${process.env.GIT_PARAMS}`;
 
@@ -42,7 +42,7 @@ function execute(gitRoot) {
   }
 
   const branchName = getBranchName(gitRoot);
-  const issueId = getIssueIdFromBranchName(branchName);
+  const issueId = getIssueIdFromBranchName(branchName, options.pattern);
 
   if (issueId && isPrefixAllowed(message, issueId)) {
     message = `${issueId}: ${message}`;
@@ -67,10 +67,11 @@ function getBranchName(gitRoot) {
  * Parses git branch name
  *
  * @param {string} branchName - git branch name
+ * @param {string} pattern - TODO
  * @returns {string | null} - JIRA issue ID
  */
-function getIssueIdFromBranchName(branchName) {
-  const jiraIdPattern = /^(?:feature|bugfix|hotfix|release)\/([A-Z]+-\d+)-.+/i;
+function getIssueIdFromBranchName(branchName, pattern) {
+  const jiraIdPattern = pattern || /^(?:feature|bugfix|hotfix|release)\/([A-Z]+-\d+)-.+/i;
   const matched = branchName.match(jiraIdPattern);
 
   return matched && matched[1];
