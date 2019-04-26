@@ -46,6 +46,6 @@ To specify a custom branch pattern and a custom prefix message use a special `pr
 }
 ```
 
-The configuration above will work for a branch `feature/my-name/1234`
+The configuration above will work for a branch `feature/my-name/1234` and the message will look like `#1234: form was created`
 
 In the `prefix` pattern the *ID* will be changed to the branch ID
