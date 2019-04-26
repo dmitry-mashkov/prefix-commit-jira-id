@@ -31,7 +31,11 @@ Inside your `package.json` add a standard husky npm script for the git hook:
 }
 ```
 
-To specify a custom branch pattern and a custom prefix message use a special prefixCommitId configuration block:
+## Usage
+Once you try to make a commit, e.g. `git commit -m "your commit message"` and your current branch name is `feature/ABC-319-foo-bar`
+then your real commit message will become `ABC-319: your commit message`
+
+To specify a custom branch pattern and a custom prefix message use a special `prefixCommitId` configuration block:
 
 ```json
 {
@@ -42,16 +46,6 @@ To specify a custom branch pattern and a custom prefix message use a special pre
 }
 ```
 
+The configuration above will work for a branch `feature/my-name/1234`
+
 In the `prefix` pattern the *ID* will be changed to the branch ID
-
-## Usage
-Once you try to make a commit, e.g. `git commit -m "your commit message"` and your current branch name is `feature/ABC-319-foo-bar`
-then your real commit message will become `ABC-319: your commit message`
-
-*Note*: commits made from IDE are also preprocessed
-
-## Supported branch types
-* feature/JIRAISSUE-123-some-description
-* bugfix/JIRAISSUE-123-some-description
-* hotfix/JIRAISSUE-123-some-description
-* release/JIRAISSUE-123-some-description
