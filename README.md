@@ -32,7 +32,7 @@ Inside your `package.json` add a standard husky npm script for the git hook:
 ```
 
 ## Usage
-### Default branch naming (e.g. feature/ABC/123-description)
+### Default branch naming (e.g. feature/ABC-123-description)
 Once you try to make a commit, e.g. `git commit -m "your commit message"` and your current branch name is `feature/ABC-319-foo-bar`
 then your real commit message will become `ABC-319: your commit message`
 
