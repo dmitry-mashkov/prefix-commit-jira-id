@@ -18,7 +18,7 @@
  */
 
 const fs = require('fs');
-const { flow, reduce, concat, startsWith, anyPass, split, first } = require('lodash/fp');
+const { flow, reduce, concat, startsWith, anyPass, split, first, getOr, get } = require('lodash/fp');
 const childProcess = require('child_process');
 const findUp = require('find-up');
 const { dirname } = require('path');
@@ -39,7 +39,7 @@ function findGitRoot() {
 function execute(gitRoot, options) {
   let message;
   let messageFilePath = `${gitRoot}/${process.env.HUSKY_GIT_PARAMS}`;
-  const prefixFormat = options.prefix || 'ID: ';
+  const prefixFormat = getOr('ID: ', 'prefix')(options);
 
   try {
     message = fs.readFileSync(messageFilePath, { encoding: 'utf-8' });
@@ -48,7 +48,7 @@ function execute(gitRoot, options) {
   }
 
   const branchName = getBranchName(gitRoot);
-  const issueId = getIssueIdFromBranchName(branchName, options.pattern);
+  const issueId = getIssueIdFromBranchName(branchName, get('pattern')(options));
 
   if (issueId && isPrefixAllowed(message, issueId)) {
     message = prefixFormat.replace('ID', issueId) + message;
@@ -78,7 +78,7 @@ function getBranchName(gitRoot) {
  * Parses git branch name
  *
  * @param {string} branchName - git branch name
- * @param {string} pattern - TODO
+ * @param {string} [pattern] - custom pattern to use when looking for ID
  * @returns {string | null} - JIRA issue ID
  */
 function getIssueIdFromBranchName(branchName, pattern) {

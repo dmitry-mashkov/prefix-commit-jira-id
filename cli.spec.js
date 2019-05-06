@@ -33,6 +33,7 @@ test('getIssueIdFromBranchName parses the branch name properly', t => {
   t.is(getIssueIdFromBranchName('hotfix/test-123-and-some-description'), 'test-123');
   t.is(getIssueIdFromBranchName('release/test-123-and-some-description'), 'test-123');
   t.is(getIssueIdFromBranchName('FEATURE/teST-123-and-some-description'), 'teST-123');
+  t.is(getIssueIdFromBranchName('some-prefix-123-and-some-description', '^some-prefix-(\\d+)'), '123');
 
   t.falsy(getIssueIdFromBranchName('feature/test-123'));
   t.falsy(getIssueIdFromBranchName('feature/test123'));
