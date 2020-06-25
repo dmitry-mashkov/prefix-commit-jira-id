@@ -123,6 +123,5 @@ module.exports = {
   getIssueIdFromBranchName,
   isCommitMessageReserved,
   isPrefixAllowed,
-  getPackageJsonRoot,
-  foo
+  getPackageJsonRoot
 };
