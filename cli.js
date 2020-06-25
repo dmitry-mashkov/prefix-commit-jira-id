@@ -30,9 +30,7 @@ const { dirname } = require('path');
  * @return {Promise<string | null>} - path string if .git was found, null otherwise
  */
 function findGitRoot() {
-  const cwd = process.cwd();
-
-  return findUp('.git', { cwd })
+  return findUp('.git', { type: 'directory' })
     .then(filepath => (filepath ? dirname(filepath) : null));
 }
 
@@ -125,5 +123,6 @@ module.exports = {
   getIssueIdFromBranchName,
   isCommitMessageReserved,
   isPrefixAllowed,
-  getPackageJsonRoot
+  getPackageJsonRoot,
+  foo
 };
