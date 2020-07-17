@@ -1,6 +1,6 @@
 {
   "name": "prefix-commit-jira-id",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Adds jira id prefix for each git commit",
   "main": "index.js",
   "scripts": {
